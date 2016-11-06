@@ -7,6 +7,12 @@ public class User {
     public static final String NAME ="name" ,PHONE="phone",QQ="qq",ADDRESS="address",WORKPLACE="workplace";
     private  String name,phone,qq,address,workplace;
     private int id_DB=-1;
+    public int getId_DB() {
+        return id_DB;
+    }
+    public void setId_DB(int id_DB) {
+        this.id_DB = id_DB;
+    }
     public String getName() {
         return name;
     }

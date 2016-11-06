@@ -1,60 +1,73 @@
 package cn.edu.gdmec.s07150808.mycontacts1;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText name,workplace,phone,address,qq;
+  private EditText et1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        name= (EditText) findViewById(R.id.name);
-        workplace= (EditText) findViewById(R.id.workplace);
-        phone= (EditText) findViewById(R.id.phone);
-        address= (EditText) findViewById(R.id.adress);
-        qq= (EditText) findViewById(R.id.qq);
+       et1= (EditText) findViewById(R.id.editText);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(Menu.NONE,1,Menu.NONE,"保存");
-        menu.add(Menu.NONE,2,Menu.NONE,"退出");
+        menu.add(0,1,0,"添加");
+        menu.add(0,2,0,"编辑");
+        menu.add(0,3,0,"查看信息");
+        menu.add(0,4,0,"删除");
+        menu.add(0,5,0,"查询");
+        menu.add(0,6,0,"导入手机通讯录");
+        menu.add(0,7,0,"退出");
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent=new Intent();
         switch (item.getItemId()){
             case 1:
-                if(!name.getText().toString().trim().equals("")){
-                    User user=new User();
-                    user.setName(name.getText().toString().trim());
-                    user.setPhone(phone.getText().toString());
-                    user.setQq(qq.getText().toString());
-                    user.setAddress(address.getText().toString());
-                    user.setWorkplace(workplace.getText().toString());
-                    ContactsTable contactsTable=new ContactsTable(MainActivity.this);
-
-                    if( contactsTable.addData(user)){
-                        Toast.makeText(this,"保存成功",Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(this,"保存失败",Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(this,"请输入数据",Toast.LENGTH_SHORT).show();
-                }
-
+               intent.setClass(this,AddcontactsActivity.class);
+                startActivity(intent);
                 break;
             case 2:
+                intent.setClass(this,UpdateContatcsActivity.class);
+
+                Bundle bundle=new Bundle();
+
+                bundle.putInt("user_ID",Integer.parseInt(et1.getText().toString().trim()));
+
+                intent.putExtras(bundle);
+
+                startActivity(intent);
+                break;
+            case 3:
+                intent.setClass(this,ContactsMessageActivity.class);
+                intent.putExtra("user_ID",Integer.parseInt(et1.getText().toString()));
+                startActivity(intent);
+
+              break;
+            case 4:
+                break;
+            case 5:
+
+                break;
+            case 6:
+                break;
+            case 7:
                 finish();
+                break;
+            default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
